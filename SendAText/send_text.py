@@ -13,15 +13,15 @@ I. developers often use the pip package manager to dl and install packages.
 
 from twilio.rest import Client
 
-account_sid = 'AC2d89ed89c9aeb97b55522c47cdaa6e4c'
-auth_token = '977f235a367a9086208bb6a7f056d44c'
+account_sid = '###########'
+auth_token = '##########'
 
 client = Client(account_sid, auth_token)
 
 message = client.messages.create(
                             body='Don\'t worry about it tho',
-                            from_='+18602373212',
-                            to='+18609779964',
+                            from_='#########',
+                            to='##########',
                         )
 
 print(message.sid)
