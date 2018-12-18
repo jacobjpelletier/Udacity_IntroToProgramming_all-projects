@@ -1,0 +1,908 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{udacity\_data\_project\_notebookV2-Copy1}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{STEP ONE: Intro / Ask the
+questions:}\label{step-one-intro-ask-the-questions}
+
+    \subsection{How do non-modifiable risk factors affect rates of no-show
+appointments in a Brazilain
+clinic?}\label{how-do-non-modifiable-risk-factors-affect-rates-of-no-show-appointments-in-a-brazilain-clinic}
+
+\begin{verbatim}
+- Non-modifiable are risk facotrs which the patient cannot alter (age, sex, genetic predisposition). 
+- Age and sex (sex represented as gender in this datset) are described in this dataset. 
+- To answer this question, we must first explore two more questions:
+\end{verbatim}
+
+\subsubsection{1) How does age affect rates of no-show
+appointments?}\label{how-does-age-affect-rates-of-no-show-appointments}
+
+\subsubsection{2) How does sex (gender) affect rates of no-show
+appointments?}\label{how-does-sex-gender-affect-rates-of-no-show-appointments}
+
+    \subsection{Introduction:}\label{introduction}
+
+\begin{verbatim}
+The purpose of this data analysis is to elucidate the relationship, if any, bewtween non-modifiable risk factors of a population and whether they showed to their scheduled appointment. The csv file and environment.txt are included in the project folder. 
+\end{verbatim}
+
+\subsection{Background:}\label{background}
+
+\begin{verbatim}
+This dataset was taken from kaggle and it follows 62,299 unique patients over the course of 110,527 different appointments. There were a total of 22,319 no-show appointments in this sample. The sample data was provided by Kaggle.com, https://www.kaggle.com/joniarroba/noshowappointments. Below is their description of the data:
+\end{verbatim}
+
+\begin{quote}
+This dataset collects information from 100k medical appointments in
+Brazil and is focused on the question of whether or not patients show up
+for their appointment. A number of characteristics about the patient are
+included in each row.
+\end{quote}
+
+\begin{quote}
+`ScheduledDay' tells us on what day the patient set up their
+appointment. `Neighborhood' indicates the location of the hospital.
+`Scholarship' indicates whether or not the patient is enrolled in
+Brasilian welfare program Bolsa Família. Be careful about the encoding
+of the last column: it says `No' if the patient showed up to their
+appointment, and `Yes' if they did not show up.
+\end{quote}
+
+\begin{verbatim}
+Non-modifiable risk factors are those risk factors with which patients have no control over, such as age, sex (sex approximated as gender in this dataset), and family history (genetics). If these factors have any effect on a patient's liklihood of being a no-show for appointments, there may be cultural reasons that could be examined in with further analysis and studies. Below we seek to answer the questions 1) does age have an affect on whether the patient will be a no-show, and 2) does gender have an affect on whether the pt will be a no-show?
+\end{verbatim}
+
+\subsection{Methods:}\label{methods}
+
+\begin{verbatim}
+Jupyter Notebook of the Anaconda package was utilized to analyze the data using pandas and numpy for analysis and visualizations with numpy and matplotlib. Data from Kaggle.com was provided as a csv file. 
+\end{verbatim}
+
+    \section{STEP TWO: Importing packages and
+data:}\label{step-two-importing-packages-and-data}
+
+    \subsection{Packages:}\label{packages}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{} import of packages used}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+\end{Verbatim}
+
+
+    \subsection{Data:}\label{data}
+
+\begin{verbatim}
+from a csv file
+\end{verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{} data set examining no\PYZhy{}shows at a clinic in Brazil, total visits}
+        \PY{n}{original\PYZus{}df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{noshowappointments\PYZhy{}kagglev2\PYZhy{}may\PYZhy{}2016.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \section{STEP THREE: Constructing a clean
+dataframe}\label{step-three-constructing-a-clean-dataframe}
+
+    \subsection{Creating a dataframe with clean
+data:}\label{creating-a-dataframe-with-clean-data}
+
+\begin{verbatim}
+The original data pulled from the CSV was saved as a dataset. However, this data must be cleaned up before we use it. The data we will pull and clean will be Patient ID, Gender, Age, and No-show. 
+\end{verbatim}
+
+    \subsubsection{Cleaning 'Age' data from original
+data:}\label{cleaning-age-data-from-original-data}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{} Here we create dataframe of \PYZsq{}Age\PYZsq{} on;y from original (total of 110527 rows)}
+        \PY{n}{clean\PYZus{}age\PYZus{}df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{p}{(}\PY{n}{original\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{\PYZcb{}}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Here we filter to make sure that all data in Age is an integer (total of 110527 rows)}
+        \PY{n}{clean\PYZus{}age\PYZus{}df}\PY{o}{.}\PY{n}{select\PYZus{}dtypes}\PY{p}{(}\PY{n}{include}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{int}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} finding any data points (with its index) that yields a negative age:}
+        \PY{n}{clean\PYZus{}age\PYZus{}df}\PY{p}{[}\PY{n}{clean\PYZus{}age\PYZus{}df}\PY{o}{.}\PY{n}{Age} \PY{o}{\PYZlt{}}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:}        Age
+        99832   -1
+\end{Verbatim}
+            
+    \paragraph{!! One dirty data point found in
+'Age':}\label{one-dirty-data-point-found-in-age}
+
+\begin{verbatim}
+By means of the data clean-up we found one dirty data point, a negative age value. Of the original 110527 rows one, row 99832 is one we will need to remove when we put together a new, clean dataframe, 
+\end{verbatim}
+
+Dirty point to be removed from original: 99832 -1
+
+    \subsubsection{Cleaning 'Gender' data from original
+data:}\label{cleaning-gender-data-from-original-data}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{} Here we create a series from the original data containing all rows in \PYZsq{}Gender\PYZsq{}}
+        \PY{n}{gender\PYZus{}series} \PY{o}{=} \PY{n}{original\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{} Now we extract all \PYZsq{}M\PYZsq{} and \PYZsq{}F\PYZsq{} data points from \PYZsq{}Gender\PYZsq{} column. data that is not an \PYZsq{}M\PYZsq{} or \PYZsq{}F\PYZsq{} will be NaN}
+        \PY{n}{clean\PYZus{}gender} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{(?P\PYZlt{}Gender\PYZgt{}[MF])}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{clean\PYZus{}gender\PYZus{}df} \PY{o}{=} \PY{n}{gender\PYZus{}series}\PY{o}{.}\PY{n}{str}\PY{o}{.}\PY{n}{extract}\PY{p}{(}\PY{n}{clean\PYZus{}gender}\PY{p}{,} \PY{n}{expand}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Here we search for rows not containing an \PYZsq{}M\PYZsq{} or an \PYZsq{}F\PYZsq{}, aka NaN}
+        \PY{n}{clean\PYZus{}gender\PYZus{}df}\PY{p}{[}\PY{n}{clean\PYZus{}gender\PYZus{}df}\PY{o}{.}\PY{n}{Gender} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NaN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{} We find all rows contain an \PYZsq{}M\PYZsq{} or an \PYZsq{}F\PYZsq{}}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:} Empty DataFrame
+        Columns: [Gender]
+        Index: []
+\end{Verbatim}
+            
+    \paragraph{One dirty data point found in
+'Gender':}\label{one-dirty-data-point-found-in-gender}
+
+\begin{verbatim}
+Of the original 110527 rows one, no rows contained a dirty data point. 
+\end{verbatim}
+
+    \subsubsection{Cleaning 'No-Show' data from original
+data:}\label{cleaning-no-show-data-from-original-data}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{\PYZsh{} Here we create a dataframe that we will use later to filter other data through (length is 110527 rows)}
+        \PY{n}{noshow\PYZus{}original\PYZus{}df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{No\PYZus{}show}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{n}{original\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{No\PYZhy{}show}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{map}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{No}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{k+kc}{False}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Yes}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{k+kc}{True}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{p}{\PYZcb{}}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Here we ensure all data in the filter is a bool. if any NaNs exist it is because not all data in original was yes or no}
+        \PY{n}{clean\PYZus{}noshow} \PY{o}{=} \PY{n}{noshow\PYZus{}original\PYZus{}df}\PY{o}{.}\PY{n}{select\PYZus{}dtypes}\PY{p}{(}\PY{n}{include}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bool}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} 
+        
+        \PY{c+c1}{\PYZsh{} clean\PYZus{}noshow length of 10527 rows indicates that all original data was yes and no, turned into true false for resulting filter. }
+        
+        \PY{c+c1}{\PYZsh{} therefore original dataframe passed as clean dataframe variable}
+        \PY{n}{noshow\PYZus{}clean\PYZus{}df} \PY{o}{=} \PY{n}{noshow\PYZus{}original\PYZus{}df}
+\end{Verbatim}
+
+
+    \subsubsection{Cleaning 'PatientId' data from original
+data:}\label{cleaning-patientid-data-from-original-data}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+c1}{\PYZsh{} Here we create a series of Patient IDs from original dataset (110527 total rows)}
+        \PY{n}{patientid\PYZus{}series} \PY{o}{=} \PY{n}{original\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PatientId}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{} Here is a dataframe of patient IDs, total of 110527 rows }
+        \PY{n}{patientid\PYZus{}clean\PYZus{}df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame} \PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PatientId}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{n}{original\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PatientId}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{\PYZcb{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \paragraph{On Patient IDs in dataset:}\label{on-patient-ids-in-dataset}
+
+\begin{verbatim}
+There is not enough known about how patient IDs are used to identify which IDs may be erroneous. Since Patient IDs are not a direct variable being evaluated, no assumptions are made to filter it. Patient IDs will be used to simply identify the mean age of total unique patients. The data from all 110527 rows is therefore included into the 'clean' dataframe.
+\end{verbatim}
+
+    \subsubsection{Putting it all together into one clean
+dataframe:}\label{putting-it-all-together-into-one-clean-dataframe}
+
+\begin{verbatim}
+Only one dirty data point was found in the original 'Age' and 'Gender' data, row 99832 (-1) of 'Age'. Before proceeding to analysis, this index must be removed from both data set (as well as 'PatientId'. 
+\end{verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{def} \PY{n+nf}{drop\PYZus{}dirty\PYZus{}data}\PY{p}{(}\PY{n}{dataframe}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{n}{dataframe}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{l+m+mi}{99832}\PY{p}{)}
+        
+        \PY{n}{clean\PYZus{}total\PYZus{}df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{n}{patientid\PYZus{}clean\PYZus{}df}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{n}{drop\PYZus{}dirty\PYZus{}data}\PY{p}{)}\PY{p}{)}\PY{p}{,} 
+                   \PY{p}{(}\PY{n}{clean\PYZus{}age\PYZus{}df}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{n}{drop\PYZus{}dirty\PYZus{}data}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+                   \PY{p}{(}\PY{n}{clean\PYZus{}gender\PYZus{}df}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{n}{drop\PYZus{}dirty\PYZus{}data}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+                   \PY{p}{(}\PY{n}{noshow\PYZus{}clean\PYZus{}df}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{n}{drop\PYZus{}dirty\PYZus{}data}\PY{p}{)}\PY{p}{)}\PY{p}{,} 
+                   \PY{p}{]}\PY{p}{,} 
+                  \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)} 
+\end{Verbatim}
+
+
+    \paragraph{About 'clean\_total\_df':}\label{about-clean_total_df}
+
+\begin{verbatim}
+Only one row from the total 110527 rows had to be dropped due to dirty data, resulting in a clean dataframe of 110526 rows. We can now use this dataframe to go forward with our analysis. 
+\end{verbatim}
+
+    \section{STEP Four: Analyzing data:}\label{step-four-analyzing-data}
+
+    \subsection{1) Answering "How does age affect rates of no-show
+appointments?"}\label{answering-how-does-age-affect-rates-of-no-show-appointments}
+
+    \subsubsection{Computing statistical analysis of total patient visits
+age:}\label{computing-statistical-analysis-of-total-patient-visits-age}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{clean\PYZus{}total\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}8}]:} count    110526.000000
+        mean         37.089219
+        std          23.110026
+        min           0.000000
+        25\%          18.000000
+        50\%          37.000000
+        75\%          55.000000
+        max         115.000000
+        Name: Age, dtype: float64
+\end{Verbatim}
+            
+    \paragraph{Analysis of total patient visits
+age:}\label{analysis-of-total-patient-visits-age}
+
+\begin{verbatim}
+The mean age of all patient visits (including multiple visits from the same patient) is approximately 37.09 years old. The youngest patients to visit the clinic were 0 years old, while the oldest were 115. The standard deviation was found to be approximately 23.11 years. 
+\end{verbatim}
+
+    \paragraph{Plotting Age distribution of ages in total patient
+visits:}\label{plotting-age-distribution-of-ages-in-total-patient-visits}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{c+c1}{\PYZsh{} creating a dataframe of age vs frequency}
+        \PY{n}{age\PYZus{}v\PYZus{}freq\PYZus{}total} \PY{o}{=} \PY{n}{clean\PYZus{}total\PYZus{}df}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}
+        \PY{n}{age\PYZus{}v\PYZus{}freq\PYZus{}total}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{n}{level}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} x is list of ages and y is frequency (in this case, gender since all other columns of dataframe list freq of age due}
+        \PY{c+c1}{\PYZsh{} to groupby function)}
+        \PY{n}{x1} \PY{o}{=} \PY{n}{age\PYZus{}v\PYZus{}freq\PYZus{}total}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{n}{y1} \PY{o}{=} \PY{n}{age\PYZus{}v\PYZus{}freq\PYZus{}total}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{} creating the plot}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{x1}\PY{p}{,} \PY{n}{y1}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ages}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Freq}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frequency of Ages in Total Visits (110,526 total)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}9}]:} Text(0.5,1,'Frequency of Ages in Total Visits (110,526 total)')
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_30_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{Computing statistical analysis of unique patients
+age:}\label{computing-statistical-analysis-of-unique-patients-age}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{c+c1}{\PYZsh{} To make a series of unique pts and their ages:}
+         \PY{n}{age\PYZus{}total\PYZus{}unique} \PY{o}{=} \PY{n}{clean\PYZus{}total\PYZus{}df}\PY{o}{.}\PY{n}{drop\PYZus{}duplicates}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PatientId}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{age\PYZus{}total\PYZus{}unique}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} count    62298.000000
+         mean        36.705496
+         std         23.531076
+         min          0.000000
+         25\%         17.000000
+         50\%         36.000000
+         75\%         56.000000
+         max        115.000000
+         Name: Age, dtype: float64
+\end{Verbatim}
+            
+    \paragraph{Analysis of only unique patients visiting clinic (unique
+patients age vs total visits
+age):}\label{analysis-of-only-unique-patients-visiting-clinic-unique-patients-age-vs-total-visits-age}
+
+\begin{verbatim}
+There are 62298 unique patients that visited the clinic. The mean age of only unique patients visiting the clinic is approximately 36.71 years old. The youngest patients to visit the clinic were 0 years old, while the oldest were 115. The standard deviation was found to be approximately 23.53. These values are very similar to the ages in total patient visits, with the mean age of unique patiens being .38 years younger than the mean gae of total visists. The standard deviation of unique patients was .4 years more than the standard deviation of total visits, indicating there is slightly more variation in age in unique patients versus age of total visits. 
+
+The unique patient standard deviation is only approximately 1.7% of the standard deviation of the total patient visits (0.4 / 23.11). The unique patient mean age is only approximately 1% from the total patient mean age (0.38 / 37.09). 
+
+Due to the similarities in the datasets, it can be concluded that the total visits of patients is not overly represented by one particular age group, otherwise greater discrepensies between the two groups would be noted. 
+\end{verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{age\PYZus{}total\PYZus{}unique} \PY{o}{=} \PY{n}{clean\PYZus{}total\PYZus{}df}\PY{o}{.}\PY{n}{drop\PYZus{}duplicates}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PatientId}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{c+c1}{\PYZsh{} creating a dataframe of age vs frequency}
+         \PY{n}{age\PYZus{}v\PYZus{}freq\PYZus{}unique} \PY{o}{=} \PY{n}{age\PYZus{}total\PYZus{}unique}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}
+         \PY{n}{age\PYZus{}v\PYZus{}freq\PYZus{}unique}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{n}{level}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} x is list of ages and y is frequency (in this case, gender since all other columns of dataframe list freq of age due}
+         \PY{c+c1}{\PYZsh{} to groupby function)}
+         \PY{n}{x2} \PY{o}{=} \PY{n}{age\PYZus{}v\PYZus{}freq\PYZus{}unique}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{y2} \PY{o}{=} \PY{n}{age\PYZus{}v\PYZus{}freq\PYZus{}unique}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} creating the plot}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ages}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frequency}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frequency of Ages in Unique Visits (62,298 total)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}13}]:} <BarContainer object of 103 artists>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_36_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{Computing statistical analysis of no-show patients
+age:}\label{computing-statistical-analysis-of-no-show-patients-age}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{c+c1}{\PYZsh{} creating dataframe of only noshow rows }
+         \PY{n}{age\PYZus{}total\PYZus{}noshow} \PY{o}{=} \PY{n}{clean\PYZus{}total\PYZus{}df}\PY{p}{[}\PY{p}{(}\PY{n}{clean\PYZus{}total\PYZus{}df}\PY{o}{.}\PY{n}{No\PYZus{}show} \PY{o}{==} \PY{k+kc}{True}\PY{p}{)}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{}stat analysis of noshow True ages}
+         \PY{n}{age\PYZus{}total\PYZus{}noshow}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:} count    22319.000000
+         mean        34.317667
+         std         21.965941
+         min          0.000000
+         25\%         16.000000
+         50\%         33.000000
+         75\%         51.000000
+         max        115.000000
+         Name: Age, dtype: float64
+\end{Verbatim}
+            
+    \paragraph{Analysis of only unique patients visiting clinic (unique
+patients age vs total visits
+age):¶}\label{analysis-of-only-unique-patients-visiting-clinic-unique-patients-age-vs-total-visits-age}
+
+\begin{verbatim}
+The mean age of only noshow patients is approximately 34.31 years old. The youngest noshow patients were 0 years old, while the oldest were 115. The standard deviation was found to be approximately 23.11 years. These values are very similar to the ages in total patient visits though more dissimilar than total unique patients. The mean age of noshow patiens was 2.78 years younger than the mean gae of total visists. The standard deviation of noshow patients was 1.14 years more than the standard deviation of total visits, indicating there is more variation in age in noshow patients versus age of total visits. 
+
+The unique patient standard deviation is approximately 4.9% lower than the standard deviation of the total patient visits (0.49 / 23.11). The noshow patient mean age is only approximately 7.5% lower than the total patient mean age (2.78 / 37.09). 
+
+Therefore the mean noshow age is lower (by 7.5%) than the mean age of total visists. Additionally, there is less age variation in the group of noshow patients. 
+\end{verbatim}
+
+    \paragraph{Plotting Age distribution of ages in noshow patient
+visits:}\label{plotting-age-distribution-of-ages-in-noshow-patient-visits}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{c+c1}{\PYZsh{} creating a dataframe of age vs frequency}
+         \PY{n}{age\PYZus{}v\PYZus{}freq\PYZus{}noshow} \PY{o}{=} \PY{n}{age\PYZus{}total\PYZus{}noshow}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}
+         \PY{n}{age\PYZus{}v\PYZus{}freq\PYZus{}noshow}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{n}{level}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} x is list of ages and y is frequency (in this case, gender since all other columns of dataframe list freq of age due}
+         \PY{c+c1}{\PYZsh{} to groupby function)}
+         \PY{n}{x3} \PY{o}{=} \PY{n}{age\PYZus{}v\PYZus{}freq\PYZus{}noshow}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{y3} \PY{o}{=} \PY{n}{age\PYZus{}v\PYZus{}freq\PYZus{}noshow}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} creating the plot}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ages}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frequency}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frequency of Ages in Noshow Visits (22,319 total)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{x3}\PY{p}{,} \PY{n}{y3}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}15}]:} <BarContainer object of 100 artists>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_41_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{Total vs unique vs noshow patient visits
+analysis:}\label{total-vs-unique-vs-noshow-patient-visits-analysis}
+
+    \paragraph{Plotting Age distribution of ages in total vs unique vs
+noshow patient
+visits:}\label{plotting-age-distribution-of-ages-in-total-vs-unique-vs-noshow-patient-visits}
+
+\begin{verbatim}
+Here we see that the age distribution of each group to be quite similar. 
+\end{verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{p1} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{x1}\PY{p}{,} \PY{n}{y1}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{p2} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{p3} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{x3}\PY{p}{,} \PY{n}{y3}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frequency}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ages}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ages: Total vs Unique vs No\PYZhy{}show}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{(}\PY{n}{p1}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{p2}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{p3}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Unique}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{No\PYZhy{}show}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_44_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \paragraph{A closer look at the differences in mean age between total vs
+unique vs noshow patient
+visits:}\label{a-closer-look-at-the-differences-in-mean-age-between-total-vs-unique-vs-noshow-patient-visits}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{c+c1}{\PYZsh{} inputs for bar plot}
+         \PY{n}{categories} \PY{o}{=} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{total visits}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{unique Pts}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{no\PYZhy{}shows}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{means} \PY{o}{=} \PY{p}{(}\PY{l+m+mf}{37.09}\PY{p}{,} \PY{l+m+mf}{36.70}\PY{p}{,} \PY{l+m+mf}{34.32}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} bar plot}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{categories}\PY{p}{,} \PY{n}{means}\PY{p}{,} \PY{n}{align}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel} \PY{o}{=} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mean age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mean Age in Total Visits vs. Unique vs. No\PYZhy{}shows}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}17}]:} Text(0.5,1,'Mean Age in Total Visits vs. Unique vs. No-shows')
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_46_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{verbatim}
+The mean age of total patient visits is the highest at 37.09 years, with mean age of unique patients not far behind at 36.70 years. Below it becomes clearer that the mean age of noshow patients is slightly lower than either of the other groups, at 34.32 years. 
+This indicates that younger patients may be more likely to be noshow patients. 
+\end{verbatim}
+
+    \paragraph{A closer look at the differences in mean age and standard
+deviation between total vs unique vs noshow patient
+visits:}\label{a-closer-look-at-the-differences-in-mean-age-and-standard-deviation-between-total-vs-unique-vs-noshow-patient-visits}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{c+c1}{\PYZsh{} inputs for bar plot}
+         \PY{n}{categories} \PY{o}{=} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{total visits}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{unique Pts}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{no\PYZhy{}shows}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{means} \PY{o}{=} \PY{p}{(}\PY{l+m+mf}{23.11}\PY{p}{,} \PY{l+m+mf}{23.53}\PY{p}{,} \PY{l+m+mf}{21.97}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} bar plot}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{categories}\PY{p}{,} \PY{n}{means}\PY{p}{,} \PY{n}{align}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel} \PY{o}{=} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mean age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{STD in Total Visits vs. Unique vs. No\PYZhy{}shows}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}18}]:} Text(0.5,1,'STD in Total Visits vs. Unique vs. No-shows')
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_49_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{verbatim}
+The group with the highest standard deviation in age is the group of unique patients, indicating that this group has the greatest variation of age from the mean (at 23.53 years). The standard deviation of the age in total visists is close to the unique group at 23.11 years. As we see here again the noshow group is more dissimilar than the other groups, with its standard deviation being lower at 21.97 years. This means that the age deviation from the mean is lower than the total visits or total unique patients than in noshows. 
+This further supports an argument that younger people are more likely to be noshows to appointments as the mean age is younger, and the deviation from the mean is less than total visits and total uniqe patients. 
+\end{verbatim}
+
+    \subsection{2) How does sex (gender) affect rates of no-show
+appointments?}\label{how-does-sex-gender-affect-rates-of-no-show-appointments}
+
+    \subsubsection{Age and No-show
+Analysis:}\label{age-and-no-show-analysis}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{c+c1}{\PYZsh{} passing gender data through Boolean filter}
+         \PY{n}{gender\PYZus{}noshow\PYZus{}filtered} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{p}{(}\PY{n}{clean\PYZus{}total\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{n}{clean\PYZus{}total\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{No\PYZus{}show}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{p}{)}\PY{p}{\PYZcb{}}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} dict of percentages male vs female in total group (110527.000000)}
+         \PY{n}{m\PYZus{}v\PYZus{}f\PYZus{}total} \PY{o}{=} \PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Male}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{p}{(}\PY{p}{(}\PY{n}{clean\PYZus{}total\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{M}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Female}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{p}{(}\PY{p}{(}\PY{n}{clean\PYZus{}total\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{F}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{\PYZcb{}}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} dict of percentages of male vs female in no\PYZhy{}show group (22319.000000)}
+         \PY{n}{m\PYZus{}vs\PYZus{}f\PYZus{}noshow} \PY{o}{=} \PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Male}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{p}{(}\PY{p}{(}\PY{n}{gender\PYZus{}noshow\PYZus{}filtered}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{M}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Female}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{p}{(}\PY{p}{(}\PY{n}{gender\PYZus{}noshow\PYZus{}filtered}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{F}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{\PYZcb{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \paragraph{Male vs. Female Percentages of Total
+Visits:}\label{male-vs.-female-percentages-of-total-visits}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{c+c1}{\PYZsh{} Pie graph representing Male vs Female share of total visits}
+         
+         \PY{c+c1}{\PYZsh{} Graph inputs}
+         \PY{n}{labels} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Female}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Male}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{percents} \PY{o}{=} \PY{p}{[}
+             \PY{p}{(}\PY{p}{(}\PY{n}{m\PYZus{}v\PYZus{}f\PYZus{}total}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Female}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{/}\PY{p}{(}\PY{n}{m\PYZus{}v\PYZus{}f\PYZus{}total}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Female}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{+}\PY{n}{m\PYZus{}v\PYZus{}f\PYZus{}total}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Male}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{,}
+             \PY{p}{(}\PY{p}{(}\PY{n}{m\PYZus{}v\PYZus{}f\PYZus{}total}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Male}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{/}\PY{p}{(}\PY{n}{m\PYZus{}v\PYZus{}f\PYZus{}total}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Female}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{+}\PY{n}{m\PYZus{}v\PYZus{}f\PYZus{}total}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Male}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}
+             \PY{p}{]}
+         \PY{n}{colors} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lightblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lightgreen}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          
+         \PY{c+c1}{\PYZsh{} Plot}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{pie}\PY{p}{(}\PY{n}{percents}\PY{p}{,} \PY{n}{labels}\PY{o}{=}\PY{n}{labels}\PY{p}{,} \PY{n}{colors}\PY{o}{=}\PY{n}{colors}\PY{p}{,}
+                 \PY{n}{autopct}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{}1.1f}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{shadow}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{startangle}\PY{o}{=}\PY{l+m+mi}{140}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Male vs. Female Ratio in Total Visits}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}20}]:} Text(0.5,1,'Male vs. Female Ratio in Total Visits')
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_55_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{verbatim}
+    Here we see that the ratio of male to female in total patient visits is 35% to 65%. 
+\end{verbatim}
+
+    \subsubsection{Male vs. Female Percentages of
+No-shows:}\label{male-vs.-female-percentages-of-no-shows}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{c+c1}{\PYZsh{} Pie graph representing Male vs Female share of No\PYZhy{}shows}
+         
+         \PY{c+c1}{\PYZsh{} Graph inputs}
+         \PY{n}{labels} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Female}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Male}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{percents} \PY{o}{=} \PY{p}{[}
+             \PY{p}{(}\PY{p}{(}\PY{n}{m\PYZus{}vs\PYZus{}f\PYZus{}noshow}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Female}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{/}\PY{p}{(}\PY{n}{m\PYZus{}vs\PYZus{}f\PYZus{}noshow}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Female}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{+}\PY{n}{m\PYZus{}vs\PYZus{}f\PYZus{}noshow}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Male}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{,} 
+             \PY{p}{(}\PY{p}{(}\PY{n}{m\PYZus{}vs\PYZus{}f\PYZus{}noshow}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Male}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{/}\PY{p}{(}\PY{n}{m\PYZus{}vs\PYZus{}f\PYZus{}noshow}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Female}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{+}\PY{n}{m\PYZus{}vs\PYZus{}f\PYZus{}noshow}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Male}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}
+             \PY{p}{]}
+         \PY{n}{colors} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lightblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lightgreen}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          
+         \PY{c+c1}{\PYZsh{} Plot}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{pie}\PY{p}{(}\PY{n}{percents}\PY{p}{,} \PY{n}{labels}\PY{o}{=}\PY{n}{labels}\PY{p}{,} \PY{n}{colors}\PY{o}{=}\PY{n}{colors}\PY{p}{,}
+                 \PY{n}{autopct}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{}1.1f}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{shadow}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{startangle}\PY{o}{=}\PY{l+m+mi}{140}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Male vs. Female Ratio in No\PYZhy{}shows}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}21}]:} Text(0.5,1,'Male vs. Female Ratio in No-shows')
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_58_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{verbatim}
+        Here we see that the ratio of male to female in noshow patient visits is 34.6% and 65.4%, very similar to the ratio in total patient vistis, 35% to 65%. 
+        
+\end{verbatim}
+
+\paragraph{Conclusions on impact of sex (gender) on noshow
+occurance.}\label{conclusions-on-impact-of-sex-gender-on-noshow-occurance.}
+
+\begin{verbatim}
+        There does not seem to be any significant difference in sex (represented in this data as gender) between total visits and noshow occurances.
+\end{verbatim}
+
+    \section{STEP Five: Conclusions:}\label{step-five-conclusions}
+
+    \subsection{Age and No-show Results:}\label{age-and-no-show-results}
+
+\begin{verbatim}
+As we see above, the mean age of all patients from all visits is 37.09 years old, the mean age of all unique patients who visit the clinic is 36.71 years old, and the mean age of no-show patients is 34.31 years old. From this it is clear that the mean age of all patients and unique patients are similar, meaning that the pool of unique patients and patients visiting the clinic are not dissimilar (meaning that the clinic visit ages by repeat patients that make up the total count are not too overly represented by one age cohort over another). 
+The difference between the mean age of total visits and no-shows is 2.78 years, which is a difference of 7.5%. This, in addition to a lower standard deviation, may indicate a slight correlation between age and noshow. This may be significant and may warrant further investigation into what may be causing younger people to miss their appointments more often. 
+\end{verbatim}
+
+    \subsection{Age and No-show Results:}\label{age-and-no-show-results}
+
+\begin{verbatim}
+The data does not demonstrate any significant difference between sex(represented here by gender) and whether that patient was a no-show. The percentage of males and females in total visits was 35% for females and 65% for males. The percentage of males and females in no-shows visits was 34.6% for females and 65% for males. 
+\end{verbatim}
+
+    \subsection{Limitations:}\label{limitations}
+
+\begin{verbatim}
+Only one data point in age was identified to be erroneous and therefore removed (row 99832 (-1)). Additionally, the method by which patient IDs are created and assigned was not described in the study, and no attempt was made to weed out erroneous IDs as their structure was not defined (and they were not being directly compared by the analysis). 
+\end{verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
